@@ -60,36 +60,36 @@ def generateSusceptibilityMatrix(agentOpinions, selfConfidence):
     return confidenceMatrix
 
 
-# def generateBoundedMatrix(agentOpinions, epsilon):
+def generateBoundedMatrix(agentOpinions, epsilon):
 
-#     confidenceMatrix = []
+    confidenceMatrix = []
 
-#     for i in range (len(agentOpinions)):
+    for i in range (len(agentOpinions)):
         
-#         boundedAgents = np.zeros(len(agentOpinions)) #an array that will be 0 for xi-xj > epsilon
-#         validAgents = 0
-#         for j in range (len(agentOpinions)):
-#             if (np.abs(agentOpinions[i] - agentOpinions[j]) <= epsilon):
-#                 boundedAgents[j] = 1
-#                 validAgents += 1
+        boundedAgents = np.zeros(len(agentOpinions)) #an array that will be 0 for xi-xj > epsilon
+        validAgents = 0
+        for j in range (len(agentOpinions)):
+            if (np.abs(agentOpinions[i] - agentOpinions[j]) <= epsilon):
+                boundedAgents[j] = 1
+                validAgents += 1
         
-#         distribution = np.random.dirichlet(np.ones(validAgents), 1)
-#         iterator = 0
+        distribution = np.random.dirichlet(np.ones(validAgents), 1)
+        iterator = 0
         
-#         for n in range (len(boundedAgents)):
+        for n in range (len(boundedAgents)):
             
-#             if (iterator == validAgents):
-#                 break
+            if (iterator == validAgents):
+                break
             
-#             elif (boundedAgents[n] == 1):
-#                 boundedAgents[n] = distribution[0][iterator]
-#                 iterator += 1
+            elif (boundedAgents[n] == 1):
+                boundedAgents[n] = distribution[0][iterator]
+                iterator += 1
         
-#         confidenceMatrix.append(boundedAgents)
+        confidenceMatrix.append(boundedAgents)
         
     
     
-#     return confidenceMatrix
+    return confidenceMatrix
          
 
 #neightbour restriction
