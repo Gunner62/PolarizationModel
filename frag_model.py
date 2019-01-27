@@ -34,17 +34,45 @@ else:
     selfConfidence = np.random.rand(SIZE_OF_AGENTS)
     
     print("Enter your option for agent opinion distribution")
-    print("Option 1: Normal distribution")
-    print("Option 2: Uniform distribution")
+    print("1 = Normal distribution")
+    print("2 = Uniform distribution")
+    print("3 = Bimodal distribution")
     distributionMode = int(input("Enter choice of distribution: "))
     
     if (distributionMode == 1) :
-        mu = float(input("Enter mean value: "))
-        sigma = float(input("Enter s.d. value: "))
+        mu = float(input("Enter mean value (btwn 0-1): "))
+#        sigma = float(input("Enter s.d. value (btwn 0-1): "))
+        sigma = 0.2
         agentOpinions = np.random.normal(mu, sigma, SIZE_OF_AGENTS)
+        
+        for i in range(len(agentOpinions)):
+            if agentOpinions[i] > 1:
+                agentOpinions[i] = 1
+            elif agentOpinions[i] < 0:
+                agentOpinions[i] = 0
+        
     elif (distributionMode == 2) :
         agentOpinions = np.linspace(0,1,SIZE_OF_AGENTS)
-
+        
+    if (distributionMode == 3) :
+        mu1 = float(input("Enter first mean value (btwn 0-1): "))
+        mu2 = float(input("Enter second mean value (btwn 0-1): "))
+        
+        sig1 = 0.2
+        sig2 = 0.2
+        
+        normOpinions1 = np.random.normal(mu1, sig1, ((SIZE_OF_AGENTS//2) + 
+                                         (SIZE_OF_AGENTS%2)))
+        normOpinions2 = np.random.normal(mu2, sig2, (SIZE_OF_AGENTS//2))
+        
+        agentOpinions = np.concatenate((normOpinions1, normOpinions2), 
+                                       axis=None)
+        
+        for i in range(len(agentOpinions)):
+            if agentOpinions[i] > 1:
+                agentOpinions[i] = 1
+            elif agentOpinions[i] < 0:
+                agentOpinions[i] = 0
 
 def generateSimplisticMatrix(agentOpinions):
     
@@ -208,15 +236,15 @@ for n in range(NUMBER_OF_TRIALS) :
     
     modifyAgents(matrix, agentOpinions)
 
-    print(agentOpinions)
+    #print(agentOpinions)
     plt.plot(np.arange(n), aOpinions_time[n][:n])
 
 #print(aOpinions_time)
 
-plt.xlabel("Time")
-plt.ylabel("Opinion")
+plt.xlabel("Time Step")
+plt.ylabel("Opinion Value")
 if tutorialMode == 'y':
-    plt.ylim([0,50])
+    plt.xlim([0,50])
 else:
     plt.xlim([0,10])
 plt.ylim([0,1])
