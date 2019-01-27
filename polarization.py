@@ -25,6 +25,8 @@ for i in range(N):
 x_copy = x.copy()
 
 a=np.random.dirichlet(np.ones(N), size=N)
+print(a)
+
 x_t=[]
 
 def func(i,N,butt):
@@ -46,10 +48,7 @@ def func(i,N,butt):
 #        print('x changed')
     print(x_f)
     return x_f
-
-
-
-
+1
 
 
 print(x)
