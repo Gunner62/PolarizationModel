@@ -3,25 +3,47 @@ import matplotlib.pyplot as plt
 from matplotlib import animation    
 import numpy as np
 
-print("Welcome to blablabla simulator")
+print("Welcome to Polarization Model Simulator")
 
-SIZE_OF_AGENTS = int(input("Enter size of agents and trial (same value): "))
-NUMBER_OF_TRIALS = SIZE_OF_AGENTS
-# NUMBER_OF_TRIALS = int(input("Enter number of trials: "))
-epsilon = float(input("Enter the epsilon value: "))
-proximity = int(input("Enter the proximity value: "))
+tutorialMode = input("Do you want to use in tutorial mode? (y/n): ")
 
-print("Enter your option for agent opinion distribution")
-print("Option 1: Normal distribution")
-print("Option 2: Uniform distribution")
-distributionMode = int(input("Enter choice of distribution: "))
+while tutorialMode != 'y' and tutorialMode != 'n':
+    
+    tutorialMode = input("Please input y/n: ")
 
-if (distributionMode == 1) :
-    mu = float(input("Enter mean value: "))
-    sigma = float(input("Enter s.d. value: "))
-    agentOpinions = np.random.normal(mu, sigma, SIZE_OF_AGENTS)
-elif (distributionMode == 2) :
+
+if tutorialMode == 'y':
+    
+    print("A uniform distribution will be used for agents' inital opinions")
+    print("We will use 100 agents")
+
+    SIZE_OF_AGENTS = 100
     agentOpinions = np.linspace(0,1,SIZE_OF_AGENTS)
+    epsilon = 0.15
+    proximity = 5
+    NUMBER_OF_TRIALS = SIZE_OF_AGENTS
+    selfConfidence = np.random.rand(SIZE_OF_AGENTS)
+    
+
+else:
+    SIZE_OF_AGENTS = int(input("Enter size of agents and trial (same value): "))
+    NUMBER_OF_TRIALS = SIZE_OF_AGENTS
+    # NUMBER_OF_TRIALS = int(input("Enter number of trials: "))
+    epsilon = float(input("Enter the epsilon value: "))
+    proximity = int(input("Enter the proximity value: "))
+    selfConfidence = np.random.rand(SIZE_OF_AGENTS)
+    
+    print("Enter your option for agent opinion distribution")
+    print("Option 1: Normal distribution")
+    print("Option 2: Uniform distribution")
+    distributionMode = int(input("Enter choice of distribution: "))
+    
+    if (distributionMode == 1) :
+        mu = float(input("Enter mean value: "))
+        sigma = float(input("Enter s.d. value: "))
+        agentOpinions = np.random.normal(mu, sigma, SIZE_OF_AGENTS)
+    elif (distributionMode == 2) :
+        agentOpinions = np.linspace(0,1,SIZE_OF_AGENTS)
 
 
 def generateSimplisticMatrix(agentOpinions):
@@ -93,7 +115,7 @@ def generateBoundedMatrix(agentOpinions, epsilon):
          
 
 #neightbour restriction
-def generateBoundedMatrix(agentOpinions, epsilon, proximityLimit):
+def generateBoundedProxMatrix(agentOpinions, epsilon, proximityLimit):
     
     confidenceMatrix = []
     
@@ -156,22 +178,47 @@ aOpinions_time = np.empty((SIZE_OF_AGENTS,NUMBER_OF_TRIALS))
 
 plt.clf()
 
+print("1 = Simplistic Model")
+print("2 = Social Susceptibility Model")
+print("3 = Bounded Confidence Model")
+print("4 = Bounded Confidence and Proximity Model")
+modelChoice = int(input("Enter choice of model: "))
+
+while (modelChoice != 1 and modelChoice != 2 and modelChoice != 3 and modelChoice != 4):
+    
+    modelChoice = int(input("Please input 1, 2, 3, or 4: "))
+
+
 for n in range(NUMBER_OF_TRIALS) :
 
     for j in range(SIZE_OF_AGENTS) :
-        aOpinions_time[j,n] = agentOpinions[j]
-
-    matrix = generateBoundedMatrix(agentOpinions, epsilon, proximity)
+        aOpinions_time[j,n] = agentOpinions[j]   
+    
+    if modelChoice == 1:
+        matrix = generateSimplisticMatrix(agentOpinions)
+    
+    if modelChoice == 2:
+        matrix = generateSusceptibilityMatrix(agentOpinions, selfConfidence)
+    
+    if modelChoice == 3:
+        matrix = generateBoundedMatrix(agentOpinions, epsilon)
+        
+    if modelChoice == 4:
+        matrix = generateBoundedProxMatrix(agentOpinions, epsilon, proximity)
+    
     modifyAgents(matrix, agentOpinions)
 
-
+    print(agentOpinions)
     plt.plot(np.arange(n), aOpinions_time[n][:n])
 
 #print(aOpinions_time)
 
-plt.xlabel("unit time")
-plt.ylabel("agent's coefficient (no units)")
-plt.xlim([0,10])
+plt.xlabel("Time")
+plt.ylabel("Opinion")
+if tutorialMode == 'y':
+    plt.ylim([0,50])
+else:
+    plt.xlim([0,10])
 plt.ylim([0,1])
 plt.show()
 
