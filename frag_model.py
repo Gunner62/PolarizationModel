@@ -6,7 +6,15 @@ import seaborn as sns
 
 
 
-
+def generateSimplisticMatrix(agentOpinions):
+    
+    confidenceMatrix = []
+    
+    for i in range (len(agentOpinions)):
+        distribution = np.random.dirichlet(np.ones(len(agentOpinions)), 1)
+        confidenceMatrix.append(distribution[0])
+        
+    return confidenceMatrix
 
 def generateBoundedMatrix(agentOpinions, epsilon):
 
@@ -60,6 +68,7 @@ def getNextOpinion(weight, agentOpinions):
     return nextOpinion
         
 
+
 agentOpinions = np.random.normal(np.ones(10), 1)
 epsilon = 0.2
  
@@ -69,7 +78,8 @@ plt.show()
 
 for n in range(10) :
     print(agentOpinions)
-    weightMatrix = generateBoundedMatrix(agentOpinions, epsilon)
+    #weightMatrix = generateBoundedMatrix(agentOpinions, epsilon)
+    weightMatrix = generateSimplisticMatrix(agentOpinions)
     modifyAgents(weightMatrix, agentOpinions)
     
 plt.hist(agentOpinions,10)
