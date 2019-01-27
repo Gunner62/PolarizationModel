@@ -24,7 +24,10 @@ for i in range(N):
         x.append(random.uniform(l,u))
 x_copy = x.copy()
 
-a=np.random.dirichlet(np.ones(N), size=N)
+a = np.random.dirichlet(np.ones(N), size=N)
+g = np.random.random_sample((N,N))
+identity = np.identity
+
 x_t=[]
 
 def func(i,N,butt):

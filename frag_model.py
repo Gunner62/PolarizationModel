@@ -1,12 +1,27 @@
 import random
 import matplotlib.pyplot as plt
-from matplotlib import animation
+from matplotlib import animation    
 import numpy as np
-import seaborn as sns
 
+print("Welcome to blablabla simulator")
 
+SIZE_OF_AGENTS = int(input("Enter size of agents and trial (same value): "))
+NUMBER_OF_TRIALS = SIZE_OF_AGENTS
+# NUMBER_OF_TRIALS = int(input("Enter number of trials: "))
+epsilon = float(input("Enter the epsilon value: "))
 
+print("Enter your option for agent opinion distribution")
+print("Option 1: Normal distribution")
+print("Option 2: Uniform distribution")
+distributionMode = int(input("Enter choice of distribution: "))
 
+if (distributionMode == 1) :
+    mu = float(input("Enter mean value: "))
+    sigma = float(input("Enter s.d. value: "))
+    agentOpinions = np.random.normal(mu, sigma, SIZE_OF_AGENTS)
+elif (distributionMode == 2) :
+    agentOpinions = np.linspace(0,1,SIZE_OF_AGENTS)
+    
 
 def generateBoundedMatrix(agentOpinions, epsilon):
 
@@ -27,7 +42,7 @@ def generateBoundedMatrix(agentOpinions, epsilon):
         for n in range (len(boundedAgents)):
             
             if (iterator == validAgents):
-                break;
+                break
             
             elif (boundedAgents[n] == 1):
                 boundedAgents[n] = distribution[0][iterator]
@@ -59,25 +74,26 @@ def getNextOpinion(weight, agentOpinions):
     
     return nextOpinion
         
+# agentOpinions = np.linspace(0,1,SIZE_OF_AGENTS)
+aOpinions_time = np.empty((SIZE_OF_AGENTS,NUMBER_OF_TRIALS))
 
-agentOpinions = np.random.normal(np.ones(10), 1)
-epsilon = 0.2
- 
-plt.hist(agentOpinions,10)
-plt.show()
-    
+plt.clf()
 
-for n in range(10) :
-    print(agentOpinions)
+for n in range(NUMBER_OF_TRIALS) :
+
+    for j in range(SIZE_OF_AGENTS) :
+        aOpinions_time[j,n] = agentOpinions[j]
+
     weightMatrix = generateBoundedMatrix(agentOpinions, epsilon)
     modifyAgents(weightMatrix, agentOpinions)
-    
-plt.hist(agentOpinions,10)
+
+    plt.plot(np.arange(n), aOpinions_time[n][:n])
+
+#print(aOpinions_time)
+
+plt.xlabel("unit time")
+plt.ylabel("agent's coefficient (no units)")
+plt.xlim([0,10])
+plt.ylim([0,1])
 plt.show()
-
-
-#plt.hist(imalist, 5, color = "#01FF13")
-#plt.ylabel("some nums")
-#plt.xlabel("some stuff")
-#plt.show()
 
