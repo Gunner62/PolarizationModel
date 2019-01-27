@@ -2,7 +2,7 @@ import random
 import matplotlib.pyplot as plt
 from matplotlib import animation
 import numpy as np
-import seaborn as sns
+# import seaborn as sns
 import unittest
 
 N = 20**2                               #input number of agents 
@@ -15,12 +15,6 @@ T = np.linspace(0, (time-1), time)         #time space
 uniform_data = np.random.rand(10,12)
 ax = sns.heatmap(uniform_data)
 plt.show()
-
-
-
-
-
-
 
 def opn_ass(l,u,N,x):                        #opinion assigner - lower/upper bounds
     for i in range(N):                       #number of agents, empty array
