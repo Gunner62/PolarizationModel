@@ -63,7 +63,7 @@ def generateBoundedMatrix(agentOpinions, epsilon):
         for n in range (len(boundedAgents)):
             
             if (iterator == validAgents):
-                break;
+                break
             
             elif (boundedAgents[n] == 1):
                 boundedAgents[n] = distribution[0][iterator]
@@ -75,6 +75,46 @@ def generateBoundedMatrix(agentOpinions, epsilon):
     
     return confidenceMatrix
          
+
+    #neightbour restriction
+def generateBoundedMatrix(agentOpinions, epsilon, proximityLimit):
+    
+    confidenceMatrix = []
+    
+    for i in range (len(agentOpinions)):
+        
+        boundedAgents = np.zeros(len(agentOpinions))
+        validAgents = 0
+        
+        if (i + proximityLimit + 1 >= len(agentOpinions)):
+            startIndex = len(agentOpinions) - i - proximityLimit - 1
+            endIndex = startIndex + (proximityLimit * 2) + 1
+            
+        else:
+            startIndex = i - proximityLimit
+            endIndex = i + proximityLimit + 1
+        
+        for x in range (startIndex, endIndex):
+            if (np.abs(agentOpinions[x] - agentOpinions[i]) <= epsilon):
+                boundedAgents[x] = 1
+                validAgents += 1
+                
+        distribution = (np.random.dirichlet(np.ones(validAgents), 1))[0]
+        iterator = 0
+        
+        for n in range (len(boundedAgents)):
+            
+            if (iterator == validAgents):
+                break
+            
+            elif (boundedAgents[n] == 1):
+                boundedAgents[n] = distribution[iterator]
+                iterator += 1
+    
+        confidenceMatrix.append(boundedAgents)
+    
+    return confidenceMatrix
+    
         
 def modifyAgents(weightMatrix, agentOpinions):
     
@@ -96,13 +136,14 @@ def getNextOpinion(weight, agentOpinions):
         
 
 
-agentOpinions = np.random.random(10)
-selfConfidence = np.random.random(len(agentOpinions))
+agentOpinions = np.random.random(15)
+#selfConfidence = np.random.random(len(agentOpinions))
 epsilon = 0.2
- 
-print(selfConfidence)
+proximity = 3
+
+
 for i in range(100):
-    matrix = generateSusceptibilityMatrix(agentOpinions, selfConfidence)
+    matrix = generateBoundedMatrix(agentOpinions, epsilon, proximity)
     modifyAgents(matrix, agentOpinions)
     print(agentOpinions)
 
