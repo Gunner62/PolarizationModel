@@ -27,3 +27,7 @@ confidence. Model (3) includes bounded confidence with the additional
 *proximity limit*. This aims to simulate a senario where agents only update
 their opinion based off of agents who neighbor them (are within the proximity 
 limit).
+                                                     
+Running this program will allow the user to choose the model used, initial 
+opinion distribution, and the parameters associated with each model. It will
+return a plot showing the evolution of all agents opinions.
