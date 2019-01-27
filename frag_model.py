@@ -6,6 +6,8 @@ import seaborn as sns
 
 
 
+
+
 def generateSimplisticMatrix(agentOpinions):
     
     confidenceMatrix = []
@@ -15,6 +17,32 @@ def generateSimplisticMatrix(agentOpinions):
         confidenceMatrix.append(distribution[0])
         
     return confidenceMatrix
+
+
+def generateSusceptibilityMatrix(agentOpinions, selfConfidence):
+    
+    
+    confidenceMatrix = []
+    
+    
+    for i in range (len(agentOpinions)):
+        
+        
+        random = np.random.dirichlet(np.ones(len(agentOpinions) - 1), 1)
+        distribution = (random[0]).tolist()
+        distribution.insert(i, selfConfidence[i])
+    
+        
+        for j in range (len(distribution)):
+            if (j == i):
+                continue
+            else:
+                distribution[j] = distribution[j] * (1 - selfConfidence[i])
+        
+        confidenceMatrix.append(distribution)
+        
+    return confidenceMatrix
+
 
 def generateBoundedMatrix(agentOpinions, epsilon):
 
@@ -55,7 +83,6 @@ def modifyAgents(weightMatrix, agentOpinions):
         agentOpinions[n] = getNextOpinion(weightMatrix[n], agentOpinions)
             
 
-
         
 def getNextOpinion(weight, agentOpinions):
     
@@ -69,21 +96,15 @@ def getNextOpinion(weight, agentOpinions):
         
 
 
-agentOpinions = np.random.normal(np.ones(10), 1)
+agentOpinions = np.random.random(10)
+selfConfidence = np.random.random(len(agentOpinions))
 epsilon = 0.2
  
-plt.hist(agentOpinions,10)
-plt.show()
-    
-
-for n in range(10) :
+print(selfConfidence)
+for i in range(100):
+    matrix = generateSusceptibilityMatrix(agentOpinions, selfConfidence)
+    modifyAgents(matrix, agentOpinions)
     print(agentOpinions)
-    #weightMatrix = generateBoundedMatrix(agentOpinions, epsilon)
-    weightMatrix = generateSimplisticMatrix(agentOpinions)
-    modifyAgents(weightMatrix, agentOpinions)
-    
-plt.hist(agentOpinions,10)
-plt.show()
 
 
 #plt.hist(imalist, 5, color = "#01FF13")
