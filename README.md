@@ -1,8 +1,8 @@
 # PolarizationModel
 
-The models used in this program have been taken from: "Opinion Dynamics and
+The models used in this program have been taken from: ["Opinion Dynamics and
 Bounded Confidence Models, Analysis, and Simulation" by Rainer Hegselmann 
-and Ulrich Krause (2002).
+and Ulrich Krause (2002)](http://jasss.soc.surrey.ac.uk/5/3/2.html).
 
 In this program we aim to simulate different models of opinion formation 
 within an interacting population. There is an extensive collection of research
