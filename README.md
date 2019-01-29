@@ -34,8 +34,8 @@ return a plot showing the evolution of all agents opinions.
 
 
 ## Examples Plots
-![BoundModel_1][BoundModel_Normal200N.png]
-![BoundModel_2][BoundModel_Uniform100N.png]
-![BoundModel_3][BoundedModel_300N.png]
-![ProximityModel][ProxModel_Bimodal200N.png]
-![SimpleModel][SimpleModel_Uniform150N.png]
+![BoundModel_1](BoundModel_Normal200N.png)
+![BoundModel_2](BoundModel_Uniform100N.png)
+![BoundModel_3](BoundedModel_300N.png)
+![ProximityModel](ProxModel_Bimodal200N.png)
+![SimpleModel](SimpleModel_Uniform150N.png)
