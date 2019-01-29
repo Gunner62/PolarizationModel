@@ -32,6 +32,7 @@ Running this program will allow the user to choose the model used, initial
 opinion distribution, and the parameters associated with each model. It will
 return a plot showing the evolution of all agents opinions.
 
+The cli program starts off with a tutorial, which will prompt the user to choose the amount of agents and the number of time stamps (they are the same number.) Next, the user will be prompt to choose the susceptibility and the value of proximity. Each of these values have an effect on whether or not there will be any converges or polarization in the opinion as shown in the examples below.
 
 ## Examples Plots
 ![BoundModel_1](BoundModel_Normal200N.png)
