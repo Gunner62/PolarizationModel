@@ -36,7 +36,11 @@ The cli program starts off with a tutorial, which will prompt the user to choose
 
 ## Examples Plots
 ![BoundModel_1](BoundModel_Normal200N.png)
+This is an example of a normally distributed opinion where the number of population is 200.
+
 ![BoundModel_2](BoundModel_Uniform100N.png)
+The same as above with a size of 100.
+
 ![BoundModel_3](BoundedModel_300N.png)
 ![ProximityModel](ProxModel_Bimodal200N.png)
 ![SimpleModel](SimpleModel_Uniform150N.png)
