@@ -37,6 +37,7 @@ else:
     print("1 = Normal distribution")
     print("2 = Uniform distribution")
     print("3 = Bimodal distribution")
+    print("4 = Random distribution")
     distributionMode = int(input("Enter choice of distribution: "))
     
     if (distributionMode == 1) :
@@ -73,7 +74,10 @@ else:
                 agentOpinions[i] = 1
             elif agentOpinions[i] < 0:
                 agentOpinions[i] = 0
-
+    
+    if (distributionMode == 4) :
+        agentOpinions = np.random.rand(SIZE_OF_AGENTS)
+        
 def generateSimplisticMatrix(agentOpinions):
     
     confidenceMatrix = []
@@ -155,6 +159,7 @@ def generateBoundedProxMatrix(agentOpinions, epsilon, proximityLimit):
         if (i + proximityLimit + 1 >= len(agentOpinions)):
             startIndex = len(agentOpinions) - i - proximityLimit - 1
             endIndex = startIndex + (proximityLimit * 2) + 1
+
             
         else:
             startIndex = i - proximityLimit
@@ -230,13 +235,11 @@ for n in range(NUMBER_OF_TRIALS) :
     
     if modelChoice == 3:
         matrix = generateBoundedMatrix(agentOpinions, epsilon)
-        
     if modelChoice == 4:
         matrix = generateBoundedProxMatrix(agentOpinions, epsilon, proximity)
     
     modifyAgents(matrix, agentOpinions)
 
-    #print(agentOpinions)
     plt.plot(np.arange(n), aOpinions_time[n][:n])
 
 #print(aOpinions_time)
